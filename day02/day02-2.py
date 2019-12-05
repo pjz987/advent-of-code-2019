@@ -55,10 +55,11 @@ intcode_list1 = intcode_list
 
 for i in range(0, 100):
     for j in range(0, 100):
-        intcode_list = intcode_list1
+        intcode_list = intcode_list1.copy()
         intcode_list[1] = i
         intcode_list[2] = j
         try:
+            # print(intcode_list[0])
             if decoder(intcode_list) == 19690720:
                 print(f"noun = {intcode_list[1]} verb = {intcode_list[2]}")
         except:
