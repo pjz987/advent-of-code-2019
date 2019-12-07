@@ -44,13 +44,43 @@ def list_splitter(string_with_commas):#splits comma string into list (used for t
     out_list = string_with_commas.split(',')
     return out_list
 
+def positions(path):
+    position_list = []
+    for position_and_steps in path:
+        position = position_and_steps[:2]
+        position_list.append(position)
+    return position_list
+
 def nearest_crosspoint_finder2(path1, path2):#returns manhattan distance #v2 now for steps
+    
+    path1_positions = positions(path1)
+    path2_positions = positions(path2)
+    path1_cross_list = []
+    for i, position in enumerate(path1_positions):
+        if position in path2_positions:
+            path1_cross_list.append(path1[i])
+    path1_positions = positions(path1_cross_list)
+    path2_cross_list = []
+    for i, position in enumerate(path2_positions):
+        if position in path1_positions:
+            path2_cross_list.append(path2[i])
+    path1_cross_positions = positions(path1_cross_list)
+    path2_cross_positions = positions(path2_cross_list)
+
     cross_path_list = []
-    for position1 in path1:
-        for position2 in path2:
-            if position1[:2]  == position2[:2]:
-                new_crosspoint = [position1, position2]
+    for i, cross_position1 in enumerate(path1_cross_positions):
+        for j, cross_position2 in enumerate(path2_cross_positions):
+            if cross_position1[:2] == cross_position2[:2]:
+                new_crosspoint = [path1_cross_list[i], path2_cross_list[j]]
                 cross_path_list.append(new_crosspoint)
+
+
+    # cross_path_list = []
+    # for position1 in path1:
+    #     for position2 in path2:
+    #         if position1[:2]  == position2[:2]:
+    #             new_crosspoint = [position1, position2]
+    #             cross_path_list.append(new_crosspoint)
 
     manhattan_list = []
     for crosspoint in cross_path_list:
@@ -92,6 +122,11 @@ Code out when testing full program.
 # test_move_list = move_list_maker(['R8', 'U5' , 'L5', 'D3'])
 # print(pathfinder(test_move_list))
 
+#test data 1
+# test1 = list_splitter('R8,U5,L5,D3')
+# test2 = list_splitter('U7,R6,D4,L4')
+
+#test data 2
 # test1 = list_splitter('R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51')
 # test2 = list_splitter('U98,R91,D20,R16,D67,R40,U7,R15,U6,R7')
 
